@@ -1,0 +1,136 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.single-product {
+    display: flex;
+    flex-wrap: wrap;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-gallery {
+    flex: 1 1 50%;
+    padding: 20px;
+}
+
+.product-gallery .main-image {
+    width: 100%;
+    position: relative;
+}
+
+.product-gallery .main-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.product-details {
+    flex: 1 1 50%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-details h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #2e7d32;
+}
+
+.category {
+    font-size: 1rem;
+    color: #4caf50;
+    margin-bottom: 15px;
+}
+
+.price-container {
+    font-size: 1.5rem;
+    color: #1b5e20;
+    margin-bottom: 20px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #757575;
+    margin-right: 10px;
+}
+
+.discount {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e53935;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.product-description h3,
+.product-specifications h3 {
+    margin-top: 20px;
+    color: #33691e;
+}
+
+.purchase-options {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-btn {
+    padding: 6px 12px;
+    font-size: 1rem;
+    background: #81c784;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.qty-btn:hover {
+    background: #66bb6a;
+}
+
+input#quantity {
+    width: 60px;
+    text-align: center;
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.buy-btn,
+.buy-now-btn {
+    padding: 12px;
+    width: 100%; /* Make both buttons the same width */
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.buy-now-btn {
+    background: #2e7d32;
+}
+
+.buy-btn:hover,
+.buy-now-btn:hover {
+    background: #1b5e20;
+}

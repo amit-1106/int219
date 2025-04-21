@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroWeather - Farm Friendly Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        .navbar {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            font-size: 18px;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .navbar a::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: rgb(255, 217, 0);
+            left: 0;
+            bottom: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar a:hover::after,
+        .navbar .active::after {
+            transform: scaleX(1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #007f5f, #2a9d8f);
+            padding: 15px 50px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .language select {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background: #ffdd57;
+            color: #222;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-image {
+            width: 100px;
+            height: 50px;
+            margin-right: 15px;
+            color: white;
+        }
+
+
+        .container1 {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 0 auto;
+            margin-top: 12px;
+
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 18px;
+            background: #f0f7da;
+            border: 2px solid #2c5f2d;
+            color: #2c5f2d;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            background: #fff;
+            box-shadow: 0 0 15px rgba(44, 95, 45, 0.2);
+        }
+
+        .search-box button {
+            padding: 15px;
+            border-radius: 15px;
+            background: #2c5f2d;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box button:hover {
+            background: #1e401f;
+            transform: scale(1.05);
+        }
+
+        .weather-body {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .agriculture-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8fff0;
+            border-radius: 15px;
+            border: 2px solid #2c5f2d33;
+        }
+
+        .weather-img {
+            width: 120px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .weather-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .temperature {
+            font-size: 48px;
+            color: #2c5f2d;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 22px;
+            color: #5c5c5c;
+            text-transform: capitalize;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .detail-card {
+            background: #f0f7da;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-card i {
+            font-size: 28px;
+            color: #2c5f2d;
+        }
+
+        .detail-text span {
+            display: block;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c5f2d;
+        }
+
+        .detail-text p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .agro-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .agro-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #2c5f2d33;
+            text-align: center;
+        }
+
+        .agro-card i {
+            font-size: 24px;
+            color: #2c5f2d;
+            margin-bottom: 10px;
+        }
+
+        .location-not-found {
+            display: none;
+            text-align: center;
+            color: #dc3545;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container1 {
+                padding: 20px;
+            }
+
+            .weather-details,
+            .agro-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer{
+            margin-top: 250px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <img class="nav-image" src="./images/20250214_202659.png" alt="website logo">
+        <ul>
+            <li><a data-lang="home" href="index.php">Home</a></li>
+            <li><a data-lang="about" href="about.html">About Us</a></li>
+            <li><a data-lang="features" href="features.html" >Features</a></li>
+            <li><a data-lang="marketplace" href="marketplace/products.php" target="_blank">Marketplace</a></li>
+            <li><a data-lang="weather" href="weather.html">Weather</a></li>
+            <li><a data-lang="contacts" href="contact.html">Contacts</a></li>
+        </ul>
+        <div class="language">Language:
+            <select id="languageSelect">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="pu">Punjabi</option>
+            </select>
+        </div>
+        <!-- <div class="signup-btn">Sign Up</div> -->
+    </div>
+    <div class="container1">
+        <div class="search-box">
+            <input type="text" data-lang="locationPlaceholder" placeholder="Enter your location..." class="input-box">
+            <button class="fas fa-search" id="searchBtn"></button>
+        </div>
+
+        <div class="location-not-found">
+            <h2 data-lang="locationNotFound">Location not found! Try again.</h2>
+        </div>
+
+        <div class="weather-body">
+            <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" class="weather-img" alt="Weather Icon">
+
+            <div class="weather-box">
+                <div class="temperature">0°C</div>
+                <div class="description" data-lang="clearSky">Clear Sky</div>
+            </div>
+
+            <div class="weather-details">
+                <div class="detail-card">
+                    <i class="fas fa-tint"></i>
+                    <div class="detail-text">
+                        <span id="humidity">0%</span>
+                        <p data-lang="humidity">Humidity</p>
+                    </div>
+                </div>
+                <div class="detail-card">
+                    <i class="fas fa-wind"></i>
+                    <div class="detail-text">
+                        <span id="wind-speed">0 km/h</span>
+                        <p data-lang="windSpeed">Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agriculture-section">
+                <h3 style="color: #2c5f2d; margin-bottom: 15px; text-align: center;">
+                    <i class="fas fa-tractor"></i> <span data-lang="farmingAdvisory">Farming Advisory</span>
+                </h3>
+                <div class="agro-info">
+                    <div class="agro-card">
+                        <i class="fas fa-seedling"></i>
+                        <div class="agro-text">
+                            <span id="soil-moisture">--%</span>
+                            <p data-lang="soilMoisture">Soil Moisture</p>
+                        </div>
+                    </div>
+                    <div class="agro-card">
+                        <i class="fas fa-sun"></i>
+                        <div class="agro-text">
+                            <span id="uv-index">--</span>
+                            <p data-lang="uvIndex">UV Index</p>
+                        </div>
+                    </div>
+                    <div class="agro-card">
+                        <i class="fas fa-temperature-high"></i>
+                        <div class="agro-text">
+                            <span id="dew-point">--°C</span>
+                            <p data-lang="dewPoint">Dew Point</p>
+                        </div>
+                    </div>
+                    <div class="agro-card">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                        <div class="agro-text">
+                            <span id="rain-chance">--%</span>
+                            <p data-lang="rainChance">Rain Chance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--footer Start-->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-row">
+                <!-- About Section -->
+                <div class="footer-column">
+                    <h3 class="footer-title">About Us</h3>
+                    <p>Empowering agriculture with innovative software solutions to enhance productivity and rural development.</p>
+                </div>
+    
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a data-lang="home" href="index.php">Home</a></li>
+                        <li><a data-lang="about" href="about.html">About Us</a></li>
+                        <li><a data-lang="features" href="features.html">Features</a></li>
+                        <li><a data-lang="marketplace" href="marketplace/products.php" target="_blank">Marketplace</a></li>
+                        <li><a data-lang="weather" href="weather.html">Weather</a></li>
+                        <li><a data-lang="contacts" href="contact.html">Contacts</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Contact Info -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Rural Tech Solutions, India</p>
+                    <p><i class="fas fa-envelope"></i>rajsudhanshu106@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +91 91550 33078</p>
+                </div>
+    
+                <!-- Newsletter Subscription -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p>Stay updated with our latest agricultural innovations.</p>
+                    <form id="subscribe-form">
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <div id="subscription-message"></div>
+                </div>
+            </div>
+    
+            <!-- Social Media Links -->
+            <div class="social-icons">
+                <a href="https://github.com/yourusername" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/sudhanshu-kumar-521880297/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://x.com/SudhanshuS12" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.facebook.com/sudhanshu.shrivastav.395?rdid=QwMOXQlYwykScPQx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F157G1JUJwT%2F#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/skedit_01/?utm_source=ig_contact_invite#" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+    
+            <p class="footer-bottom">© 2025 Rural Tech Solutions. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!--end footer-->
+
+    <script>
+        const inputBox = document.querySelector('.input-box');
+        const searchBtn = document.getElementById('searchBtn');
+        const weatherBody = document.querySelector('.weather-body');
+        const locationNotFound = document.querySelector('.location-not-found');
+
+        async function checkWeather(city) {
+            const apiKey = "105626769f96e1b6d876bf59f2a706f7";
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                const weatherData = await response.json();
+
+                if (weatherData.cod === '404') {
+                    locationNotFound.style.display = "block";
+                    weatherBody.style.display = "none";
+                    return;
+                }
+
+                locationNotFound.style.display = "none";
+                weatherBody.style.display = "block";
+
+                // Update basic weather info
+                document.querySelector('.temperature').innerHTML =
+                    `${Math.round(weatherData.main.temp - 273.15)}°C`;
+                document.querySelector('.description').innerHTML =
+                    weatherData.weather[0].description;
+                document.getElementById('humidity').innerHTML =
+                    `${weatherData.main.humidity}%`;
+                document.getElementById('wind-speed').innerHTML =
+                    `${weatherData.wind.speed} km/h`;
+
+                // Agricultural data (example values - replace with actual API data if available)
+                document.getElementById('soil-moisture').innerHTML =
+                    `${Math.floor(Math.random() * 30) + 50}%`;
+                document.getElementById('uv-index').innerHTML =
+                    Math.floor(Math.random() * 10);
+                document.getElementById('dew-point').innerHTML =
+                    `${Math.round(weatherData.main.temp - 273.15 - 5)}°C`;
+                document.getElementById('rain-chance').innerHTML =
+                    `${weatherData.clouds.all}%`;
+
+            } catch (error) {
+                locationNotFound.style.display = "block";
+                weatherBody.style.display = "none";
+            }
+        }
+
+        searchBtn.addEventListener('click', () => {
+            if (inputBox.value.trim()) {
+                checkWeather(inputBox.value);
+            }
+        });
+
+        inputBox.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkWeather(inputBox.value);
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
